@@ -85,11 +85,44 @@
                                             .Select(kv => kv.Key)
                                             .ToList();
 
+            var nicknamesOfMaleStudents = String.Join(", ", nicknameStudent
+                                            .Where(kv => kv.Value.IsMale)
+                                            .Select(kv => kv.Key)
+                                            .ToList());
 
-            //Console.WriteLine($"city: {firstCityStartingWithS}");
-            for (int i = 0; i < citiesWithTemperatureAbove30.Count; i++)
+            Console.WriteLine($"i maschiacci: {nicknamesOfMaleStudents}");
+
+            var averageTempsOfCitiesStartingWithS = cityTemperature
+                                                    .Where(kv => kv.Key.StartsWith("s", StringComparison.OrdinalIgnoreCase))
+                                                    .Average(kv => kv.Value);
+
+            Console.WriteLine($"media delle S: {averageTempsOfCitiesStartingWithS}");
+
+            var highestTempCity = cityTemperature
+                                  .OrderByDescending(kv => kv.Value)
+                                  .Select(kv => kv.Key)
+                                  .FirstOrDefault();
+
+
+            Console.WriteLine($"città più calda: {highestTempCity}");
+
+            //var cityTemperatureDict = cities
+            //    .Zip(temperatures, (city, tempertature) => new{city, tempertature})
+            //    .ToDictionary(tupla => tupla.tempertature, tupla=> tupla.city );
+
+            var cityTemperatureDict = cities
+                                      .Zip(temperatures)
+                                      .ToDictionary();
+
+
+
+            var nickAgeDict = nicknameStudent
+                              .ToDictionary(old => old.Key, old => old.Value.Age);
+
+
+            foreach (var key in nickAgeDict.Keys)
             {
-                Console.WriteLine($"{citiesWithTemperatureAbove30[i]}");
+                Console.WriteLine($"{key} - {nickAgeDict[key]}");
             }
         }
     }
